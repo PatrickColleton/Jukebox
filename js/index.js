@@ -24,6 +24,7 @@ class Jukebox{
   }
   play(){
     this.songs[this.currentSong].play();
+    document.getElementById("song-text").innerHTML = this.songs[this.currentSong].currentSrc;
   }
   pause(){
     this.songs[this.currentSong].pause();
