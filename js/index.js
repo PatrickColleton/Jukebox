@@ -1,3 +1,54 @@
-var audio = new Audio('https://audio-ch1-t1-1-v4v6.pandora.com/access/?version=5&lid=343753646&token=vi12H6JYEfOTrdZArL7ez9j0zWrb1OLUFGVVC2u5XVFe69IlBmfkMeEbz7l0PiZMJY%2Fmm2lXlUxLJGQBPUZKV3KPU7gakDpwhfCUr1IopbB3kA6KJ4jGnhXzt6%2Fatu1P%2BxPR0ztRR2CzgKB%2FqxG6YZjlITAxMQG0BZ4GqGzIMedOClM%2F6JaHGE%2FLWW6dOz9m10Om0LxCCut3nqwYep04xjhCsecckDV4o1GhULZicFW%2BOduPzBdKq7UkbQPZC0EUARsRg%2FD9Nyq%2FzBwSE0nYpuIsWbkHJexmzR9S0El1TK1E8ZmKGQM0TT%2F9J1iyJL5LMlc%2FrBrxohgu0xgQnaXteQ%3D%3D">
-  ');
-audio.play();
+class Jukebox{
+
+  constructor(){
+    this.songs = [];
+    this.currentSong = 0;
+    this.numSongs = 0;
+  }
+  nextSong(){
+    this.stop();
+    this.currentSong++;
+    if(this.currentSong > this.numSongs-1){
+      this.currentSong = 0;
+    }
+    this.play();
+  }
+  prevSong(){
+    this.stop();
+    if(this.currentSong < 1){
+      this.currentSong = this.numSongs - 1;
+    } else{
+      this.currentSong--;
+    }
+    this.play();
+  }
+  play(){
+    this.songs[this.currentSong].play();
+  }
+  pause(){
+    this.songs[this.currentSong].pause();
+  }
+  stop(){
+    this.songs[this.currentSong].pause();
+    this.songs[this.currentSong].currentTime = 0;
+  }
+  addSong(song){
+    this.songs.push(song);
+    this.numSongs++;
+  }
+}
+
+var myJukeBox = new Jukebox();
+var junoreactor = new Audio('music/junoreactor.mp4');
+var nightwish = new Audio('music/nightwish.mp4');
+var gloryhammer = new Audio('music/gloryhammer.mp4');
+myJukeBox.addSong(junoreactor);
+myJukeBox.addSong(nightwish);
+myJukeBox.addSong(gloryhammer);
+myJukeBox.play();
+
+document.getElementById("pause").addEventListener("click", () => myJukeBox.pause() );
+document.getElementById("play").addEventListener("click", () => myJukeBox.play() );
+document.getElementById("stop").addEventListener("click", () => myJukeBox.stop() );
+document.getElementById("next").addEventListener("click", () => myJukeBox.nextSong() );
+document.getElementById("prev").addEventListener("click", () => myJukeBox.prevSong() );
